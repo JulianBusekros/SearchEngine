@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -10,13 +11,20 @@ public class WebCrawler {
     private URL website;
 
     public void userInput() throws IOException{
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter your link: ");
-        String webLink = sc.nextLine();
-        website = new URL(webLink);
+        try{
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter your link: ");
+            String webLink = sc.nextLine();
+            website = new URL(webLink);
+            scanWebsiteForTitle();
+        } catch (MalformedURLException e){
+            System.out.println("Please enter a valid URL");
+            userInput();
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }
     }
     public void scanWebsiteForTitle() throws IOException{
-        userInput();
         try (InputStream input = website.openStream()){
             Pattern p = Pattern.compile("(<title>)(.*?)(</title>)");
             Scanner scanner = new Scanner(input);
