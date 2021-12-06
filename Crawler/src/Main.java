@@ -1,6 +1,8 @@
-public class Main {
+import java.io.IOException;
 
-    public static void main(String[] args) {
-	// write your code here
+public class Main{
+    public static void main(String[] args) throws IOException {
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.userInput();
     }
 }
